@@ -14,6 +14,7 @@ import live.midreamsheep.simplemarkdown.editor.pojo.ChangeText;
 import live.midreamsheep.simplemarkdown.editor.span.standard.head.HeadSpan;
 import live.midreamsheep.simplemarkdown.editor.span.standard.quote.Quote;
 import live.midreamsheep.simplemarkdown.editor.tool.str.SimpleMarkdownStringUtil;
+import live.midreamsheep.simplemarkdown.editor.translator.SpanController;
 import lombok.NoArgsConstructor;
 
 import java.util.List;
@@ -25,7 +26,7 @@ public class EditorListener implements TextWatcher {
 
     EditText editor;
     List<ChangeText> changeTexts = new CopyOnWriteArrayList<>();
-    MarkdownPage markdownPage = new MarkdownPage();
+    SpanController spanController;
 
     int originLine = 0;
     int startLine = 1;
@@ -100,7 +101,8 @@ public class EditorListener implements TextWatcher {
         }
     }
 
-    public EditorListener(EditText editor) {
+    public EditorListener(EditText editor,String text) {
+        this.spanController = new SpanController(text);
         this.editor = editor;
     }
 }

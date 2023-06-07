@@ -18,7 +18,7 @@ public class TextEditor extends AppCompatActivity {
         setContentView(R.layout.activity_text_editor);
         editor = findViewById(R.id.text_editor);
         editor.setMaxLines(Integer.MAX_VALUE);
-        editor.addTextChangedListener(new EditorListener(editor));
+        editor.addTextChangedListener(new EditorListener(editor,""));
 
     }
 }
