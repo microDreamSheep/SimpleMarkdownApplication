@@ -8,8 +8,7 @@ import lombok.Getter;
 @Getter
 public enum ChangeState {
     ADD(1),
-    DELETE(2),
-    MODIFY(3);
+    DELETE(2);
 
     private final int i;
 
@@ -19,8 +18,6 @@ public enum ChangeState {
                 return ADD;
             case 2:
                 return DELETE;
-            case 3:
-                return MODIFY;
             default:
                 return null;
         }
@@ -31,8 +28,6 @@ public enum ChangeState {
                 return "ADD";
             case DELETE:
                 return "DELETE";
-            case MODIFY:
-                return "MODIFY";
             default:
                 return "NULL";
         }

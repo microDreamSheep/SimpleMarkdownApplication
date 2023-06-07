@@ -7,7 +7,7 @@ import java.util.List;
 public class SimpleMarkdownStringUtil {
     public static int countLine(String str) {
         if (str == null || str.isEmpty()){
-            return 0;
+            return 1;
         }
         if (str.equals("\n")){
             return 2;
@@ -16,20 +16,17 @@ public class SimpleMarkdownStringUtil {
     }
     public static String[] spilt(String str,char c){
         List<String> list = new ArrayList<>();
-        Collections.addAll(list, str.split(String.valueOf(c)));
-        //将开头的每个换行符转换为一个空字符串
-        int j = 0;
-        while (j < str.length() && str.charAt(j) == c) {
-            list.add(0,"");
-            j++;
+        //对str根据c分割，当多个c连续出现时，用空字符串代替
+        char[] chars = str.toCharArray();
+        int start = 0;
+        for (int i = 0; i < chars.length; i++) {
+            if(chars[i]==c){
+                list.add(start==i?"":str.substring(start,i));
+                start = i+1;
+            }
         }
-
-
-        //将结尾的每个换行符转换为一个空字符串
-        j = str.length() - 1;
-        while (j >= 0 && str.charAt(j) == c) {
-            list.add("");
-            j--;
+        if (start-1!=chars.length){
+            list.add(str.substring(start));
         }
         return list.toArray(new String[0]);
 
