@@ -9,9 +9,10 @@
         android:id="@+id/text_editor"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:gravity="top|left"
-        android:inputType="textMultiLine"
-        tools:ignore="RtlHardcoded">
+        android:gravity="left|top"
+        android:padding="10dp"
+        android:textSize="20sp"
+        android:inputType="textMultiLine" tools:ignore="RtlHardcoded">
 
 </EditText>
 

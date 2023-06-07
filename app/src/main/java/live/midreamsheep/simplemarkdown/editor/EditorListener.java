@@ -5,9 +5,14 @@ import android.text.Editable;
 import android.text.SpannableStringBuilder;
 import android.text.TextWatcher;
 import android.text.style.ForegroundColorSpan;
+import android.text.style.LeadingMarginSpan;
 import android.widget.EditText;
+import live.midreamsheep.markdown.parser.element.line.head.HeadLevel;
+import live.midreamsheep.markdown.parser.page.MarkdownPage;
 import live.midreamsheep.simplemarkdown.editor.pojo.ChangeState;
 import live.midreamsheep.simplemarkdown.editor.pojo.ChangeText;
+import live.midreamsheep.simplemarkdown.editor.span.standard.head.HeadSpan;
+import live.midreamsheep.simplemarkdown.editor.span.standard.quote.Quote;
 import live.midreamsheep.simplemarkdown.editor.tool.str.SimpleMarkdownStringUtil;
 import lombok.NoArgsConstructor;
 
@@ -20,6 +25,7 @@ public class EditorListener implements TextWatcher {
 
     EditText editor;
     List<ChangeText> changeTexts = new CopyOnWriteArrayList<>();
+    MarkdownPage markdownPage = new MarkdownPage();
 
     int originLine = 0;
     int startLine = 1;
@@ -78,15 +84,17 @@ public class EditorListener implements TextWatcher {
             //获取当前行的index
             int lineStart = s.toString().lastIndexOf("\n", next.getStart());
             //清空当前行Span
-            ForegroundColorSpan[] spans = s.getSpans(next.getStart(), lineStart + content.length()-1, ForegroundColorSpan.class);
-            for (ForegroundColorSpan span : spans) {
+            Quote[] spans = s.getSpans(next.getStart(), lineStart + content.length()-1, Quote.class);
+            for (Quote span : spans) {
                 s.removeSpan(span);
             }
+
             //设置当前行Span
-            if (content.startsWith("##")) {
-                SpannableStringBuilder spannableStringBuilder = new SpannableStringBuilder(content);
-                spannableStringBuilder.setSpan(new ForegroundColorSpan(Color.RED), 0, content.length(), SpannableStringBuilder.SPAN_EXCLUSIVE_EXCLUSIVE);
-                s.setSpan(new ForegroundColorSpan(Color.RED), next.getStart(), lineStart + content.length()+1, SpannableStringBuilder.SPAN_EXCLUSIVE_EXCLUSIVE);
+            if (content.startsWith(">")) {
+                LeadingMarginSpan.Standard what = new LeadingMarginSpan.Standard(20, 0);
+                //左侧添加自定义引用样式
+
+                s.setSpan(new Quote(Color.GREEN,30), next.getStart(), lineStart + content.length()+1, SpannableStringBuilder.SPAN_EXCLUSIVE_EXCLUSIVE);
             }
             changeTexts.remove(next);
         }
